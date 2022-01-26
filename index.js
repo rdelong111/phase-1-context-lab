@@ -1,4 +1,71 @@
-/* Your Code Here */
+function createEmployeeRecord(employee) {
+    return {
+        'firstName': employee[0],
+        'familyName': employee[1],
+        'title': employee[2],
+        'payPerHour': employee[3],
+        'timeInEvents': [],
+        'timeOutEvents': []
+    }
+}
+
+function createEmployeeRecords(employeeList) {
+    let employees = [];
+    for (let employee of employeeList) {
+        employees.push(createEmployeeRecord(employee));
+    }
+    return employees;
+}
+
+function createTimeInEvent(dateStamp) {
+    const thedate = dateStamp.split(' ');
+    const timeOb = {
+        'type': 'TimeIn',
+        'hour': parseInt(thedate[1]),
+        'date': thedate[0]
+    };
+    this.timeInEvents.push(timeOb);
+    return this;
+}
+
+function createTimeOutEvent(dateStamp) {
+    const thedate = dateStamp.split(' ');
+    const timeOb = {
+        'type': 'TimeOut',
+        'hour': parseInt(thedate[1]),
+        'date': thedate[0]
+    };
+    this.timeOutEvents.push(timeOb);
+    return this;
+}
+
+function hoursWorkedOnDate(thedate) {
+    for (let i = 0; i < this.timeInEvents.length; i++) {
+        if (this.timeInEvents[i].date === thedate) {
+            return (this.timeOutEvents[i].hour - this.timeInEvents[i].hour) / 100;
+        }
+    }
+}
+
+function wagesEarnedOnDate(thedate) {
+    return this.payPerHour * hoursWorkedOnDate.call(this, thedate);
+}
+
+function findEmployeeByFirstName(records, fName) {
+    for (let record of records) {
+        if (record.firstName === fName) {
+            return record;
+        }
+    }
+}
+
+function calculatePayroll(records) {
+    let paysum = 0;
+    for (let record of records) {
+        paysum += allWagesFor.call(record);
+    }
+    return paysum;
+}
 
 /*
  We're giving you this function. Take a look at it, you might see some usage
